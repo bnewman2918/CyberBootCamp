@@ -111,12 +111,16 @@ SSH into the control node and follow the steps below:
 - Run the playbook, and navigate to the respective VM to run "curl localhost/setup.php" to check that the installation worked as expected.
 
 - _Which file is the playbook? Where do you copy it?_
-  I am not sure what exactly this question is asking, but I assume it means that the playbook is the install-elk.yml for the playbook to install the ELK stack and I dont know what the answer is supposed to be of where I copied it other than the filepath /etc/ansible/roles within the ansible container.
+  
+  I am not sure what exactly this question is asking, but I assume it means that the playbook is the install-elk.yml for the playbook to install the ELK stack and
+  I dont know what the answer is supposed to be of where I copied it other than the filepath /etc/ansible/roles within the ansible container.
 
 - _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
+  
   This is configured in the hosts file within the Ansible container on the Jump Box VM.  It is found in the filepath /etc/ansible/hosts.  Within the hostsfile, there is a section with IP addresses; this is where we will put the 3 Web VM's within the group named 'webservers'.  We have also listed underneath the 'ELK' group the IP address for the ELK server.  The reason these are separate is so that we can run different playbooks for the respectively listed set of IPs.  Within each YAML script, as part of the first section listed, there is a parameter listed called 'hosts:' meaning that whichever group of IP's in the hosts file is listed here, then the YAML script would only apply to those IP's.  In the ELK script, it states that it is to be installed only on the IP's under the ELK group, and the same is for the Filebeat YAML on the webservers group.
 
 - _Which URL do you navigate to in order to check that the ELK server is running?
-  I would nagvigate to ideally the private IP address of the ELK server, but at the beginning, I was able to get it to work with the public IP since it was more straightforward during the initial learning process.  Resetting the public SSH key and making a rule specific seemed to make the private IP to work.  Anyways, navigate to the public/private IP of the ELK server "http://public-privateIP:5601" to enter the management port of the Kibana page to begin importing indexed data from the filebeat installed on the 3 Webservers.  
+
+I would nagvigate to ideally the private IP address of the ELK server, but at the beginning, I was able to get it to work with the public IP since it was more straightforward during the initial learning process.  Resetting the public SSH key and making a rule specific seemed to make the private IP to work.  Anyways, navigate to the public/private IP of the ELK server "http://public-privateIP:5601" to enter the management port of the Kibana page to begin importing indexed data from the filebeat installed on the 3 Webservers.  
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
